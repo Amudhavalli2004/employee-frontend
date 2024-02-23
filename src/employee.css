@@ -1,0 +1,14 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    padding: 8px;
+    border: 1px solid black;
+  }
+  
+  .table tbody tr {
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
