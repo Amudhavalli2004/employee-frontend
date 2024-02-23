@@ -66,6 +66,7 @@ function Validation({
   } else {
     error.dob = '';
   }
+}
 
   if (gender === '') {
     error.gender = 'Gender should not be empty'
