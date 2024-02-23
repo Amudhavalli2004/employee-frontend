@@ -58,8 +58,13 @@ function Validation({
     error.dob = 'DOB should not be empty'
   } else if (!dob_pattern.test(dob)) {
     error.dob = 'Invalid DOB format'
+  }else {
+  const selectedDate = new Date(dob);
+  const currentDate = new Date();
+  if (selectedDate > currentDate) {
+    error.dob = 'DOB should not be a future date';
   } else {
-    error.dob = ''
+    error.dob = '';
   }
 
   if (gender === '') {
