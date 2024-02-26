@@ -146,14 +146,19 @@ function Employee() {
               )}
               <br></br>
               <label>Designation</label>
-              <input
-                type="text"
+              <select
                 onChange={(e) => {
                   setDesignation(e.target.value)
                 }}
                 className="wage"
                 value={designation}
-              />
+              >
+                <option value="">Select</option>
+                <option>Manager</option>
+                <option>Project Lead</option>
+                <option>Team Member</option>
+                <option>Intern</option>
+              </select>
               {errors.designation && (
                 <span className="text-danger">{errors.designation}</span>
               )}
