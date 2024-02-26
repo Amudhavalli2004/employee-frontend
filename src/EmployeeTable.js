@@ -6,7 +6,7 @@ import moment from 'moment'
 
 const EmployeeTable = () => {
   const [employee, setEmployee] = useState([])
-  
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     getStudent()
@@ -16,8 +16,24 @@ const EmployeeTable = () => {
     axios
       .get('/getemployee')
       .then((response) => {
-        console.log(response.data)
-        setEmployee(response.data)
+        let filteredEmployees = response.data
+        if (search) {
+          filteredEmployees = filteredEmployees.filter(
+            (book) =>
+              employee.name.toLowerCase().includes(search.toLowerCase()) ||
+              employee.department
+                .toLowerCase()
+                .includes(search.toLowerCase()) ||
+              employee.designation
+                .toLowerCase()
+                .includes(search.toLowerCase()) ||
+              employee.dob.includes(search) ||
+              employee.salary === search ||
+              employee.gender === search ||
+              employee.id === search
+          )
+        }
+        setEmployee(filteredEmployees)
       })
       .catch((err) => {
         console.error(err)
@@ -36,6 +52,18 @@ const EmployeeTable = () => {
   return (
     <div className="student">
       <h1>EMPLOYEE DETAILS</h1>
+      <div className="filters">
+        <div className="total">
+          Total Number of books:
+          <span>{employee.length}</span>
+        </div>
+        <input
+          type="text"
+          name="search"
+          placeholder="Search by , Author, or Published On..."
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
       <div className="table">
         <table>
           <thead>
