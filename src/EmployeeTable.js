@@ -9,17 +9,17 @@ const EmployeeTable = () => {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    getStudent()
-  }, [])
+    getEmployee()
+  }, [search])
 
-  const getStudent = () => {
+  const getEmployee = () => {
     axios
       .get('/getemployee')
       .then((response) => {
         let filteredEmployees = response.data
         if (search) {
           filteredEmployees = filteredEmployees.filter(
-            (book) =>
+            (employee) =>
               employee.name.toLowerCase().includes(search.toLowerCase()) ||
               employee.department
                 .toLowerCase()
@@ -54,15 +54,17 @@ const EmployeeTable = () => {
       <h1>EMPLOYEE DETAILS</h1>
       <div className="filters">
         <div className="total">
-          Total Number of books:
+          Total Number of Employees:
           <span>{employee.length}</span>
         </div>
-        <input
-          type="text"
-          name="search"
-          placeholder="Search by , Author, or Published On..."
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className="search">
+          <input
+            type="text"
+            name="search"
+            placeholder="Search by ID,Name,Gender,DOB, Department, Designation,Salary"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
       <div className="table">
         <table>
