@@ -28,9 +28,9 @@ const EmployeeTable = () => {
                 .toLowerCase()
                 .includes(search.toLowerCase()) ||
               employee.dob.includes(search) ||
-              employee.salary === search ||
-              employee.gender === search ||
-              employee.id === search
+              employee.salary.toString() === search ||
+              employee.gender.toLowerCase() === search.toLowerCase() ||
+              employee.id.toString() === search
           )
         }
         setEmployee(filteredEmployees)
