@@ -56,19 +56,30 @@ function Validation({
 
   if (dob === '') {
     error.dob = 'DOB should not be empty'
-  } else if (!dob_pattern.test(dob)) {
-    error.dob = 'Invalid DOB format'
   } else {
-    const selectedDate = new Date(dob)
-    const currentDate = new Date()
-    selectedDate.setHours(0, 0, 0, 0) // Set hours, minutes, seconds, and milliseconds to 0 for comparison
-    currentDate.setHours(0, 0, 0, 0)
-    if (selectedDate > currentDate) {
-      error.dob = 'DOB should not be a future date'
-    } else if (selectedDate.getTime() === currentDate.getTime()) {
-      error.dob = 'DOB should not be present date'
+    const dob_pattern = /^\d{4}-\d{2}-\d{2}$/ // Regular expression for valid YYYY-MM-DD format
+    if (!dob_pattern.test(dob)) {
+      error.dob = 'Invalid DOB format. Please use YYYY-MM-DD.'
     } else {
-      error.dob = ''
+      const selectedDate = new Date(dob)
+      selectedDate.setHours(0, 0, 0, 0) // Set hours, minutes, seconds, and milliseconds to 0 for accurate comparison
+
+      const currentDate = new Date()
+      currentDate.setHours(0, 0, 0, 0)
+
+      // Check for future date and minimum age
+      if (selectedDate > currentDate) {
+        error.dob = 'Date of birth cannot be a future date.'
+      } else {
+        const ageInMilliseconds = currentDate.getTime() - selectedDate.getTime()
+        const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365)
+
+        if (ageInYears < 18 || ageInYears > 60) {
+          error.dob = `Age limit: 18 to 60`
+        } else {
+          error.dob = '' // No errors, DOB is valid
+        }
+      }
     }
   }
 
